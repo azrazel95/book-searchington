@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks, getMe } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 import { useMutation } from '@apollo/client';
@@ -80,8 +80,14 @@ console.log("Items",items);
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
+      const { username } = await getMe(token).then((response) => response.json());
 
+    // call addSavedBook mutation with the retrieved username and bookToSave
+   
+
+      const response = await saveBook({
+        variables: { userId: username, book: bookToSave }});
+      
       if (!response.ok) {
         throw new Error('something went wrong!');
       }

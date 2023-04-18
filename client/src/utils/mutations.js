@@ -24,11 +24,10 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_BOOK = gql`
-mutation AddSavedBook($userId: ID!, $book: BookInput!) {
+mutation Mutation($userId: ID!, $book: BookInput!) {
   addSavedBook(userId: $userId, book: $book) {
-    username
     savedBooks {
-      bookId
+      description
     }
   }
 }

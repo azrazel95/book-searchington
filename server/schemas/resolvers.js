@@ -26,7 +26,7 @@ const resolvers = {
       try {
         // Find the user by userId
         const user = await User.findById(userId);
-
+        console.log( "test ", user)
         if (!user) {
           throw new Error('User not found'); // Handle case when user is not found
         }
