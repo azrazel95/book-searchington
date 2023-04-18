@@ -10,6 +10,15 @@ export const ADD_USER = gql`
     }
   }
 `;
+
+export const GET_USER = gql`
+query Query($id: ID!) {
+  token
+  getUserById(_id: $id) {
+    username
+  }
+}
+`;
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {

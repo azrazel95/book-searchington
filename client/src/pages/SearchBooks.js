@@ -9,11 +9,11 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-import { searchGoogleBooks, getMe } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
-import { useMutation } from '@apollo/client';
-import { ADD_BOOK } from '../utils/mutations';
+import { useMutation, useQuery } from '@apollo/client';
+import { ADD_BOOK, GET_USER } from '../utils/mutations';
 
 
 const SearchBooks = () => {
@@ -32,6 +32,15 @@ const SearchBooks = () => {
   });
 
   const [saveBook, {error, data}] = useMutation(ADD_BOOK);
+  
+ 
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+const userId = Auth.loggedIn() ? Auth.getProfile().data._id: GET_USER
+  
+  console.log("user", userId);
+  const {loading, user} = useQuery(GET_USER,{
+    variables: { id: userId },
+});
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -80,13 +89,12 @@ console.log("Items",items);
     }
 
     try {
-      const { username } = await getMe(token).then((response) => response.json());
-
+      
     // call addSavedBook mutation with the retrieved username and bookToSave
    
 
       const response = await saveBook({
-        variables: { userId: username, book: bookToSave }});
+        variables: { userId: userId, book: bookToSave }});
       
       if (!response.ok) {
         throw new Error('something went wrong!');
