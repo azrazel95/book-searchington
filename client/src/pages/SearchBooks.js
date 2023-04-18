@@ -95,10 +95,8 @@ console.log("Items",items);
 
       const response = await saveBook({
         variables: { userId: userId, book: bookToSave }});
+      console.log(response)
       
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
