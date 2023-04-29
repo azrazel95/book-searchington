@@ -16,6 +16,13 @@ query Query($id: ID!) {
   token
   getUserById(_id: $id) {
     username
+    email
+    savedBooks{
+      authors
+      bookId
+      image
+      title
+    }
   }
 }
 `;

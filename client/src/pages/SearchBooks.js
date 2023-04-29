@@ -58,7 +58,7 @@ const userId = Auth.loggedIn() ? Auth.getProfile().data._id: GET_USER
       }
 
       const { items } = await response.json();
-console.log("Items",items);
+
       const bookData = items.map((book) => ({
         bookId: book.id,
         authors: book.volumeInfo.authors || ['No author to display'],
@@ -66,7 +66,7 @@ console.log("Items",items);
         description: book.volumeInfo.description,
         image: book.volumeInfo.imageLinks?.thumbnail || '',
       }));
-      console.log("BoookData:", bookData);
+     
 
       setSearchedBooks(bookData);
       setSearchInput('');
@@ -83,7 +83,7 @@ console.log("Items",items);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-    console.log("SAve:", bookToSave, "Token: ", token)
+    
     if (!token) {
       return false;
     }
@@ -95,7 +95,7 @@ console.log("Items",items);
 
       const response = await saveBook({
         variables: { userId: userId, book: bookToSave }});
-      console.log(response)
+      
       
 
       // if book successfully saves to user's account, save book id to state
